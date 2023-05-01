@@ -1,0 +1,34 @@
+{
+  "name": "thereugo-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon src/app.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.3.4",
+    "bunyan": "^1.8.15",
+    "bunyan-format": "^0.2.1",
+    "bunyan-rotating-file-stream": "^2.0.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "express-validator": "^7.0.1",
+    "mongoose": "^7.0.4",
+    "nodemon": "^2.0.22",
+    "ts-node": "^10.9.1"
+  },
+  "devDependencies": {
+    "@types/braintree": "^3.3.7",
+    "@types/cors": "^2.8.13",
+    "@types/express": "^4.17.17",
+    "@types/express-session": "^1.17.7",
+    "ts-jest": "^29.0.5",
+    "typescript": "^4.9.5"
+  }
+}
