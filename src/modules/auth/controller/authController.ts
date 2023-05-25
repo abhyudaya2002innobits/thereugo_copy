@@ -16,6 +16,8 @@ class AuthController extends BaseController {
         try {
             let object = req.body;
             var result = await this.service.loginService(object)
+
+            console.log(result,"control")
             return sendSuccess(res, result)
         } catch (e) {
             console.log(e, "error")
@@ -29,7 +31,7 @@ class AuthController extends BaseController {
             var result = await this.service.createUser(object);
             return sendSuccess(res, result)
         } catch (e) {
-            res.status(400).send({ message: "Error while creating user", error: e })
+            return sendError(res, e)
         }
     }
     

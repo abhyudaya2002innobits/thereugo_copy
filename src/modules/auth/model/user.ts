@@ -39,7 +39,7 @@ var userSchema = new mongoose.Schema({
         required: false
     },
     isApplication: {
-        type: String,
+        type: Boolean,
         required: false
     },
     registeredWith: {

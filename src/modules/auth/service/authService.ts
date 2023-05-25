@@ -12,7 +12,7 @@ class AuthService {
 
     async loginService(object: any) {
         try {
-            var r;
+            var user;
             if (object?.registeredWith == "guest") {
 
             } else if (object?.registeredWith == "facebook") {
@@ -20,10 +20,9 @@ class AuthService {
             } else if (object?.registeredWith == "google") {
 
             } else {
-                r = this.loginByCredential(object)
+                user = this.loginByCredential(object)
             }
-            return r
-
+            return Promise.resolve(user)
         } catch (e) {
             return Promise.reject(e)
         }
@@ -31,12 +30,16 @@ class AuthService {
 
     async createUser(object: any) {
         try {
-            console.log(">>>>>>2")
-            let userExist = await User.findOne({ 'email': object?.email });
+            var newUser;
+            let userExist = await User.findOne({ 'username': object?.username });
             if (userExist) {
                 throw new Error("User with email exist");
             } else {
-                let newUser = await User.create(object);
+                if (object?.isApplication == true) {
+                    newUser = await User.create({ ...object, roleName: "User" });
+                } else {
+                    newUser = await User.create({ ...object, roleName: "Guest" })
+                }
                 return Promise.resolve(newUser);
             }
         } catch (e) {
@@ -46,7 +49,6 @@ class AuthService {
 
     private async loginByCredential(object: any) {
         try {
-            console.log(object,">>>>>>>>")
             let userExist = await User.findOne({
                 'username': {
                     $eq: object?.username
@@ -55,15 +57,16 @@ class AuthService {
             if (!userExist) {
                 throw new Exception(ERROR_TYPE.UNAUTHORIZED, `The user with username does not exist.`);
             }
+            console.log(userExist.password, "KKKKKK")
             if (object?.password != userExist?.password) {
                 throw new Exception(ERROR_TYPE.NOT_FOUND, "Password does not match.")
             }
             if (userExist && (object?.password == userExist?.password)) {
+                console.log("better")
                 return Promise.resolve(userExist)
             }
         } catch (e) {
             return Promise.reject(e);
-
         }
 
     }
