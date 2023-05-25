@@ -2,7 +2,7 @@ const { STATUS_CODE } = require("./constants");
 
 class ApiResponse {
   constructor(statusCode, result) {
-    this.statusCode = statusCode;
+    this.status = statusCode;
     if (statusCode == STATUS_CODE.SUCCESS) {
       result ? this.result = result : {};
     }
