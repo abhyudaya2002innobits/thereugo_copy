@@ -1,7 +1,7 @@
 import logger from "../../../common/logger";
 import { Exception } from "../../../common/resp-handler";
 import { ERROR_TYPE } from "../../../common/resp-handler/constants";
-import { User } from "../model/user";
+import { User } from "../../users/model/user";
 import bcrypt from 'bcryptjs';
 
 class AuthService {
@@ -33,12 +33,14 @@ class AuthService {
             var newUser;
             let userExist = await User.findOne({ 'username': object?.username });
             if (userExist) {
-                throw new Error("User with email exist");
+                throw new Exception(ERROR_TYPE.ALREADY_EXISTS,"User with email exist");
             } else {
+                // console.log(">>>>>>>", userExist)
                 if (object?.isApplication == true) {
                     newUser = await User.create({ ...object, roleName: "User" });
                 } else {
-                    newUser = await User.create({ ...object, roleName: "Guest" })
+                    newUser = await User.create(object)
+
                 }
                 return Promise.resolve(newUser);
             }

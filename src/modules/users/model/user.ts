@@ -2,32 +2,32 @@ import mongoose from "mongoose"
 
 var userSchema = new mongoose.Schema({
 
-    token: {
+    firstName: {
         type: String,
         required: false
     },
-    fullName: {
-        type: String,
-        required: true
-    },
-    pic: {
+    lastName: {
         type: String,
         required: false
     },
-    isGuest: {
+    imageUrl: {
         type: String,
         required: false
     },
     username: {
         type: String,
-        required: true
+        required: false
     },
     password: {
         type: String,
-        required: true
+        required: false
     },
     contactNo: {
         type: String,
+        required: false
+    },
+    isActive: {
+        type: Boolean,
         required: true
     },
     tenantId: {
@@ -37,14 +37,6 @@ var userSchema = new mongoose.Schema({
     roleName: {
         type: String,
         required: false
-    },
-    isApplication: {
-        type: Boolean,
-        required: false
-    },
-    registeredWith: {
-        type: String,
-        required: true
     },
     createdBy: {
         type: String,
@@ -66,6 +58,10 @@ var userSchema = new mongoose.Schema({
         type: Date,
         required: false
     },
-})
+},
+{
+    timestamps: true
+}
+)
 
 export const User = mongoose.model('User', userSchema);

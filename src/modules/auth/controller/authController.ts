@@ -17,7 +17,7 @@ class AuthController extends BaseController {
             let object = req.body;
             var result = await this.service.loginService(object)
 
-            console.log(result,"control")
+            console.log(res,"control")
             return sendSuccess(res, result)
         } catch (e) {
             console.log(e, "error")
@@ -31,10 +31,12 @@ class AuthController extends BaseController {
             var result = await this.service.createUser(object);
             return sendSuccess(res, result)
         } catch (e) {
+            console.log(e,">>>>err")
             return sendError(res, e)
         }
     }
-    
+
+
 }
 
 export default new AuthController();

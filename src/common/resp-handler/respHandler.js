@@ -33,6 +33,7 @@ switch (err.errType) {
 }
 
 function sendError(res, err) {
+console.log(err, "errorrsss")
   if (!err?.errType) {
     err = exception.internalServerError(err)
   }
