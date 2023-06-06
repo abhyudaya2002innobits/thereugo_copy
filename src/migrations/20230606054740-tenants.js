@@ -39,8 +39,7 @@ module.exports = {
 
       isActive: {
         type: Sequelize.DataTypes.BOOLEAN,
-        require: true,
-        allowNull: false
+        allowNull: true
       },
 
       address1:{
