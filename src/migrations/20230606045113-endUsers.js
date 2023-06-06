@@ -80,7 +80,7 @@ module.exports = {
 
       createdBy: {
         type: Sequelize.DataTypes.UUID,
-        allowNull: false
+        allowNull: true
       },
 
       updatedAt: {
