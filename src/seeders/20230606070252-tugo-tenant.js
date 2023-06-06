@@ -5,7 +5,7 @@ const { v4: uuidv4 } = require('uuid');
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    return queryInterface.bulkInsert('tenants', [{
+    await queryInterface.bulkInsert('tenants', [{
       tenantId: uuidv4(),
       tenantName: 'There You Go',
       email: 'example@example.com',
@@ -23,6 +23,6 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    return queryInterface.bulkDelete('tenants', {tenantName: 'There You Go'});
+    await queryInterface.bulkDelete('tenants', {tenantName: 'There You Go'});
   }
 };

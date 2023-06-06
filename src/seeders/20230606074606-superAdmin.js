@@ -11,7 +11,7 @@ module.exports = {
         email: 'example@example.com',
       }
     });
-    return queryInterface.bulkInsert('tenantUsers', [{
+    await queryInterface.bulkInsert('tenantUsers', [{
       tenantUserId: uuidv4(),
       tenantId: userExist?.tenantId,
       firstName: 'super',
