@@ -11,8 +11,9 @@ class CustomerController extends BaseController {
 
     async createCustomerController(req: Request, res: Response) {
         try {
-            let object = req.body
-            var result = await this.service.createUser(object);
+            let {body} = req
+            console.log(">>>>>>>>>>>>>>>>>>", body)
+            var result = await this.service.createCustomer(body);
             return sendSuccess(res, result)
         } catch (e) {
             return sendError(res, e)

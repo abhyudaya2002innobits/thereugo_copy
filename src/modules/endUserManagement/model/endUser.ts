@@ -4,7 +4,7 @@ import sequelize from "sequelize";
 import { EnumType } from "typescript";
 
 export interface EndUserAttributes {
-    EndUserId: string;
+    endUserId: string;
     firstName: string;
     lastName: string;
     contactNumber: string;
@@ -24,9 +24,9 @@ export interface EndUserAttributes {
 }
 
 class EndUser extends Model<EndUserAttributes> {
-    declare EndUserId: string;
+    declare endUserId: string;
     declare firstName: string;
-    declare lastName: string;
+    declare lastName?: string;
     declare email: string;
     declare contactNumber: string;
     declare isActive?: boolean;
@@ -45,8 +45,9 @@ class EndUser extends Model<EndUserAttributes> {
 
 EndUser.init(
     {
-        EndUserId: {
+        endUserId: {
             type: sequelize.UUID,
+            defaultValue: sequelize.UUIDV4,
             allowNull: false,
             primaryKey: true,
             unique: true
@@ -134,6 +135,6 @@ EndUser.init(
             allowNull: true
         }
     },
-    { sequelize: databaseInstance, tableName: "tenants", timestamps: true, paranoid: true }
+    { sequelize: databaseInstance, tableName: "endUsers", timestamps: true, paranoid: true }
 );
 export default EndUser;

@@ -1,8 +1,9 @@
 import logger from "../../../common/logger";
 import { Exception } from "../../../common/resp-handler";
 import { ERROR_TYPE } from "../../../common/resp-handler/constants";
-import { User } from "../../tenantUserManagement/model/user";
+// import { User } from "../../users/model/user";
 import bcrypt from 'bcryptjs';
+import EndUser from "../../endUserManagement/model/endUser";
 
 class AuthService {
     constructor() {
@@ -31,15 +32,15 @@ class AuthService {
     async createUser(object: any) {
         try {
             var newUser;
-            let userExist = await User.findOne({ 'username': object?.username });
+            let userExist = await EndUser.findOne({ where:{userName: object?.userName}  });
             if (userExist) {
                 throw new Exception(ERROR_TYPE.ALREADY_EXISTS,"User with email exist");
             } else {
                 // console.log(">>>>>>>", userExist)
                 if (object?.isApplication == true) {
-                    newUser = await User.create({ ...object, roleName: "User" });
+                    newUser = await EndUser.create({ ...object, roleName: "User" });
                 } else {
-                    newUser = await User.create(object)
+                    newUser = await EndUser.create(object)
 
                 }
                 return Promise.resolve(newUser);
@@ -51,9 +52,9 @@ class AuthService {
 
     private async loginByCredential(object: any) {
         try {
-            let userExist = await User.findOne({
-                'username': {
-                    $eq: object?.username
+            let userExist = await EndUser.findOne({
+                where: {
+                    userName: object?.username
                 }
             })
             if (!userExist) {

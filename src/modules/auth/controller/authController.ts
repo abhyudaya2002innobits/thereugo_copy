@@ -9,7 +9,7 @@ class AuthController extends BaseController {
     constructor() {
         super(new AuthService)
         this.loginController = this.loginController.bind(this)
-        this.createUser = this.createUser.bind(this)
+        // this.createUser = this.createUser.bind(this)
     }
 
     async loginController(req: Request, res: Response) {
@@ -25,16 +25,16 @@ class AuthController extends BaseController {
         }
     }
 
-    async createUser(req: Request, res: Response) {
-        try {
-            let object = req.body
-            var result = await this.service.createUser(object);
-            return sendSuccess(res, result)
-        } catch (e) {
-            console.log(e,">>>>err")
-            return sendError(res, e)
-        }
-    }
+    // async createUser(req: Request, res: Response) {
+    //     try {
+    //         let object = req.body
+    //         var result = await this.service.createUser(object);
+    //         return sendSuccess(res, result)
+    //     } catch (e) {
+    //         console.log(e,">>>>err")
+    //         return sendError(res, e)
+    //     }
+    // }
 
 
 }

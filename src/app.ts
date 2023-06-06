@@ -1,5 +1,4 @@
 import databaseConnection from "./database/dbconnection";
-import MongoDb from "./database/mongoose";
 import Server from "./server";
 const dotenv = require('dotenv')
 dotenv.config()
