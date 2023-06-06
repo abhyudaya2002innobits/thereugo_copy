@@ -19,8 +19,7 @@ module.exports = {
 
       lastName: {
         type: Sequelize.DataTypes.STRING,
-        require: true,
-        allowNull: false
+        allowNull: true
       },
 
       userName: {
