@@ -1,6 +1,6 @@
 import { Exception } from "../../../common/resp-handler";
 import { ERROR_TYPE } from "../../../common/resp-handler/constants";
-import { User } from "../../users/model/user";
+import { User } from "../../tenantUserManagement/model/user";
 import { Customer } from "../model/customer";
 
 class CustomerService {

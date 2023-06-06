@@ -1,7 +1,7 @@
 import logger from "../../../common/logger";
 import { Exception } from "../../../common/resp-handler";
 import { ERROR_TYPE } from "../../../common/resp-handler/constants";
-import { User } from "../../users/model/user";
+import { User } from "../../tenantUserManagement/model/user";
 import bcrypt from 'bcryptjs';
 
 class AuthService {
