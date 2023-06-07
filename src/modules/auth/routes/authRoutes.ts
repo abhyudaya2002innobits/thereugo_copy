@@ -8,8 +8,8 @@ class AuthRoutes {
         this.authRouting()
     }
     private authRouting() {
-        this.authRouter.route("/api/v1/login").post(this.authController.loginController);
-        // this.authRouter.route("/api/v1/user").post(this.authController.createUser);
+        this.authRouter.route("/api/v1/login").post(this.authController.endUserLoginController);
+        this.authRouter.route("/api/v1/login/tenant").post(this.authController.tenantUserLoginController);
     }
 }
 const authRouter = new AuthRoutes().authRouter

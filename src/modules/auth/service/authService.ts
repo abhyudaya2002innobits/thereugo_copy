@@ -4,19 +4,19 @@ import { ERROR_TYPE } from "../../../common/resp-handler/constants";
 // import { User } from "../../users/model/user";
 import bcrypt from 'bcryptjs';
 import EndUser from "../../endUserManagement/model/customer";
+import TenantUser from "../../tenantUserManagement/model/tenantUser";
 
 class AuthService {
     constructor() {
-        this.loginService = this.loginService.bind(this);
-        this.createUser = this.createUser.bind(this);
+        this.endUserLoginService = this.endUserLoginService.bind(this);
+        this.tenantUserLoginService = this.tenantUserLoginService.bind(this);
     }
 
-    async loginService(object: any) {
+    //function for end user using mobile with facebook, google and credentials
+    async endUserLoginService(object: any) {
         try {
             var user;
-            if (object?.registeredWith == "guest") {
-
-            } else if (object?.registeredWith == "facebook") {
+            if (object?.registeredWith == "fb") {
 
             } else if (object?.registeredWith == "google") {
 
@@ -29,32 +29,36 @@ class AuthService {
         }
     }
 
-    async createUser(object: any) {
+    //function for tenant user login
+    async tenantUserLoginService(object: any) {
         try {
-            var newUser;
-            let userExist = await EndUser.findOne({ where:{userName: object?.userName}  });
-            if (userExist) {
-                throw new Exception(ERROR_TYPE.ALREADY_EXISTS,"User with email exist");
-            } else {
-                // console.log(">>>>>>>", userExist)
-                if (object?.isApplication == true) {
-                    newUser = await EndUser.create({ ...object, roleName: "User" });
-                } else {
-                    newUser = await EndUser.create(object)
-
+            let tenantUserExist = await TenantUser.findOne({
+                where: {
+                    userName: object?.userName
                 }
-                return Promise.resolve(newUser);
+            })
+            if (!tenantUserExist) {
+                throw new Exception(ERROR_TYPE.UNAUTHORIZED, `The user with username does not exist.`);
+            }
+            console.log(tenantUserExist.password, "KKKKKK")
+            if (object?.password != tenantUserExist?.password) {
+                throw new Exception(ERROR_TYPE.NOT_FOUND, "Password does not match.")
+            }
+            if (tenantUserExist && (object?.password == tenantUserExist?.password)) {
+                console.log("better")
+                return Promise.resolve(tenantUserExist)
             }
         } catch (e) {
             return Promise.reject(e);
         }
     }
 
+    // private sub-function for user login with credentials
     private async loginByCredential(object: any) {
         try {
             let userExist = await EndUser.findOne({
                 where: {
-                    userName: object?.username
+                    userName: object?.userName
                 }
             })
             if (!userExist) {

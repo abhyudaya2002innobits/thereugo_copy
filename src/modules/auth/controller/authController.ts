@@ -8,14 +8,14 @@ class AuthController extends BaseController {
     // authService = new AuthService();
     constructor() {
         super(new AuthService)
-        this.loginController = this.loginController.bind(this)
-        // this.createUser = this.createUser.bind(this)
+        this.endUserLoginController = this.endUserLoginController.bind(this)
+        this.tenantUserLoginController = this.tenantUserLoginController.bind(this)
     }
 
-    async loginController(req: Request, res: Response) {
+    async endUserLoginController(req: Request, res: Response) {
         try {
             let object = req.body;
-            var result = await this.service.loginService(object)
+            var result = await this.service.endUserLoginService(object)
 
             console.log(res,"control")
             return sendSuccess(res, result)
@@ -25,16 +25,18 @@ class AuthController extends BaseController {
         }
     }
 
-    // async createUser(req: Request, res: Response) {
-    //     try {
-    //         let object = req.body
-    //         var result = await this.service.createUser(object);
-    //         return sendSuccess(res, result)
-    //     } catch (e) {
-    //         console.log(e,">>>>err")
-    //         return sendError(res, e)
-    //     }
-    // }
+    async tenantUserLoginController(req: Request, res: Response) {
+        try {
+            let object = req.body;
+            var result = await this.service.tenantUserLoginService(object)
+
+            console.log(res,"control")
+            return sendSuccess(res, result)
+        } catch (e) {
+            console.log(e, "error")
+            return sendError(res, e)
+        }
+    }
 
 
 }
