@@ -1,8 +1,11 @@
 'use strict';
 
+import { default as logger } from "../common/logger";
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
+    try {
     await queryInterface.createTable('endUsers', {
       endUserId: {
         type: Sequelize.DataTypes.UUID,
@@ -101,6 +104,10 @@ module.exports = {
         allowNull:true
       }
     })
+    logger.info('End user Migration run successfully')
+  } catch(error) {
+    console.log("error in running end user migration",error)
+  }
   },
 
   async down (queryInterface, Sequelize) {
