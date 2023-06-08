@@ -5,14 +5,14 @@ import { EnumType } from "typescript";
 
 export interface EndUserAttributes {
     endUserId: string;
-    firstName: string;
-    lastName: string;
+    fullName: string;
     contactNumber: string;
     email: string;
     isActive: boolean;
     userName: string;
     registeredWith: string;
     subscriptionStatus: boolean;
+    socialMediaId: string;
     password: string;
     imageUrl: string;
     createdAt: Date;
@@ -25,9 +25,9 @@ export interface EndUserAttributes {
 
 class EndUser extends Model<EndUserAttributes> {
     declare endUserId: string;
-    declare firstName: string;
-    declare lastName?: string;
+    declare fullName: string;
     declare email: string;
+    declare socialMediaId?: string;
     declare contactNumber: string;
     declare isActive?: boolean;
     declare userName: string;
@@ -53,14 +53,9 @@ EndUser.init(
             unique: true
         },
 
-        firstName: {
+        fullName: {
             type: sequelize.STRING,
             allowNull: false
-        },
-
-        lastName: {
-            type: sequelize.STRING,
-            allowNull: true
         },
 
         contactNumber: {
@@ -88,6 +83,11 @@ EndUser.init(
         registeredWith: {
             type: sequelize.STRING,
             allowNull: false
+        },
+
+        socialMediaId: {
+            type: sequelize.STRING,
+            allowNull: true
         },
 
         isActive: {

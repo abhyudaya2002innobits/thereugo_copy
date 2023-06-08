@@ -8,14 +8,14 @@ class AuthController extends BaseController {
     // authService = new AuthService();
     constructor() {
         super(new AuthService)
-        this.endUserLoginController = this.endUserLoginController.bind(this)
+        this.loginWithCredController = this.loginWithCredController.bind(this)
         this.tenantUserLoginController = this.tenantUserLoginController.bind(this)
     }
 
-    async endUserLoginController(req: Request, res: Response) {
+    async loginWithCredController(req: Request, res: Response) {
         try {
             let object = req.body;
-            var result = await this.service.endUserLoginService(object)
+            var result = await this.service.loginWithCred(object)
 
             console.log(res,"control")
             return sendSuccess(res, result)

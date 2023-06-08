@@ -5,27 +5,65 @@ import { ERROR_TYPE } from "../../../common/resp-handler/constants";
 import bcrypt from 'bcryptjs';
 import EndUser from "../../endUserManagement/model/customer";
 import TenantUser from "../../tenantUserManagement/model/tenantUser";
+import { Op } from "sequelize";
 
 class AuthService {
     constructor() {
-        this.endUserLoginService = this.endUserLoginService.bind(this);
+        this.loginWithCred = this.loginWithCred.bind(this);
         this.tenantUserLoginService = this.tenantUserLoginService.bind(this);
     }
 
-    //function for end user using mobile with facebook, google and credentials
-    async endUserLoginService(object: any) {
+    //login function for end user using credentials
+    async loginWithCred(object: any) {
         try {
-            var user;
-            if (object?.registeredWith == "fb") {
-
-            } else if (object?.registeredWith == "google") {
-
-            } else {
-                user = this.loginByCredential(object)
+            let userExist = await EndUser.findOne({
+                where: {
+                    userName: object?.userName
+                }
+            })
+            if (!userExist) {
+                throw new Exception(ERROR_TYPE.UNAUTHORIZED, `The user with username does not exist.`);
             }
-            return Promise.resolve(user)
+            console.log(userExist.password, "KKKKKK")
+            if (object?.password != userExist?.password) {
+                throw new Exception(ERROR_TYPE.NOT_FOUND, "Password does not match.")
+            }
+            if (userExist && (object?.password == userExist?.password)) {
+                console.log("better")
+                return Promise.resolve(userExist)
+            }
         } catch (e) {
-            return Promise.reject(e)
+            return Promise.reject(e);
+        }
+    }
+
+    //login/signup function for end user using facebook
+    async authWithFb(object: any) {
+        try {
+            let userExist = await EndUser.findOne({ where: { socialMediaId: object?.socialMediaId } })
+            if (userExist) {
+                return Promise.resolve(userExist);
+            } else {
+                let newUser = await EndUser.create(object);
+                return Promise.resolve(newUser);
+            }
+        } catch (e) {
+            return Promise.reject(e);
+        }
+    }
+
+    //login/signup function for end user using google
+    async authWithGoogle(object: any) {
+        try {
+            let userExist = await EndUser.findOne({ where: { socialMediaId: object?.socialMediaId } })
+            if (userExist) {
+                return Promise.resolve(userExist);
+            } else {
+                let newUser = await EndUser.create(object);
+                return Promise.resolve(newUser);
+            }
+        } catch (e) {
+            return Promise.reject(e);
         }
     }
 
@@ -51,31 +89,6 @@ class AuthService {
         } catch (e) {
             return Promise.reject(e);
         }
-    }
-
-    // private sub-function for user login with credentials
-    private async loginByCredential(object: any) {
-        try {
-            let userExist = await EndUser.findOne({
-                where: {
-                    userName: object?.userName
-                }
-            })
-            if (!userExist) {
-                throw new Exception(ERROR_TYPE.UNAUTHORIZED, `The user with username does not exist.`);
-            }
-            console.log(userExist.password, "KKKKKK")
-            if (object?.password != userExist?.password) {
-                throw new Exception(ERROR_TYPE.NOT_FOUND, "Password does not match.")
-            }
-            if (userExist && (object?.password == userExist?.password)) {
-                console.log("better")
-                return Promise.resolve(userExist)
-            }
-        } catch (e) {
-            return Promise.reject(e);
-        }
-
     }
 }
 

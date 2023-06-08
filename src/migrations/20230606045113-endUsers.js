@@ -14,15 +14,10 @@ module.exports = {
         unique: true
       },
 
-      firstName: {
+      fullName: {
         type: Sequelize.DataTypes.STRING,
         require: true,
         allowNull: false
-      },
-
-      lastName: {
-        type: Sequelize.DataTypes.STRING,
-        allowNull: true
       },
 
       userName: {

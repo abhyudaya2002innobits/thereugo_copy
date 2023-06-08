@@ -8,7 +8,7 @@ class AuthRoutes {
         this.authRouting()
     }
     private authRouting() {
-        this.authRouter.route("/api/v1/login").post(this.authController.endUserLoginController);
+        this.authRouter.route("/api/v1/login").post(this.authController.loginWithCredController);
         this.authRouter.route("/api/v1/login/tenant").post(this.authController.tenantUserLoginController);
     }
 }
