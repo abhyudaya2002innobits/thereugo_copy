@@ -17,7 +17,8 @@ module.exports = {
       tenantName: {
         type: Sequelize.DataTypes.STRING,
         require: true,
-        allowNull: false
+        allowNull: false,
+        unique: true
       },
 
       contactNumber: {

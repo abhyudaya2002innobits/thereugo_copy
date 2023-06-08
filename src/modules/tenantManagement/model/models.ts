@@ -51,6 +51,7 @@ Tenant.init(
     {
         tenantId: {
             type: sequelize.UUID,
+            defaultValue:  sequelize.UUIDV4,
             allowNull: false,
             primaryKey: true,
             unique: true

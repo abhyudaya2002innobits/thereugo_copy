@@ -13,7 +13,7 @@ class CustomerService {
                 userName : object?.userName
             }});
             if (userExist) {
-                throw new Exception(ERROR_TYPE.ALREADY_EXISTS,"User with email exist");
+                throw new Exception(ERROR_TYPE.ALREADY_EXISTS,"User with username already exist");
             } else {
                     newCustomer = await EndUser.create(object);
                 return Promise.resolve(newCustomer);

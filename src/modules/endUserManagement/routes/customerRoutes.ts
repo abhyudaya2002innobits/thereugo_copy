@@ -7,6 +7,8 @@ class CustomerRoutes {
     constructor(){
         this.customerRouting()
     }
+
+    
     private customerRouting() {
         this.customerRouter.route("/api/v1/user").post(this.customerController.createCustomerController);
     }
