@@ -16,6 +16,7 @@ class AuthService {
     //login function for end user using credentials
     async loginWithCred(object: any) {
         try {
+            console.log(object?.userName, "username")
             let userExist = await EndUser.findOne({
                 where: {
                     userName: object?.userName

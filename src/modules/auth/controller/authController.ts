@@ -17,7 +17,7 @@ class AuthController extends BaseController {
             let object = req.body;
             var result = await this.service.loginWithCred(object)
 
-            console.log(res,"control")
+            // console.log(res,"control")
             return sendSuccess(res, result)
         } catch (e) {
             console.log(e, "error")

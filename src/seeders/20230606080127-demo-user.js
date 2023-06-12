@@ -9,8 +9,7 @@ module.exports = {
     try {
       await queryInterface.bulkInsert('endUsers', [{
         endUserId: uuidv4(),
-        firstName: 'Alex',
-        lastName: 'John',
+        fullName: 'Alex John',
         email: 'super@user.com',
         contactNumber: '9910234534',
         isActive: true,
@@ -23,8 +22,7 @@ module.exports = {
       },
       {
         endUserId: uuidv4(),
-        firstName: 'Eddie',
-        lastName: 'Miller',
+        fullName: 'Eddie Miller',
         email: 'super2@user.com',
         contactNumber: '9910234532',
         isActive: true,

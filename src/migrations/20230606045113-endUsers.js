@@ -48,8 +48,12 @@ module.exports = {
 
       registeredWith:{
         type: Sequelize.DataTypes.STRING,
-        require: true,
-        allowNull: false,
+        allowNull: true,
+      },
+
+      socialMediaId: {
+        type: Sequelize.DataTypes.UUID,
+        allowNull: true
       },
 
       imageUrl: {

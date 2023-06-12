@@ -77,7 +77,7 @@ EndUser.init(
 
         subscriptionStatus: {
             type: sequelize.BOOLEAN,
-            allowNull: true
+            allowNull: false
         },
 
         registeredWith: {
