@@ -19,12 +19,12 @@ constructor() {
   this.user = process.env.DBUSER || "root"
   this.password = process.env.DBPASS || "rgbXYZ@9182"
   this.host = process.env.DBHOST || "localhost"
-  this.port = Number(process.env.DBPORT) || 3306
+  this.port = Number(process.env.DBPORT) || 5432
 
   this.database = new Sequelize(this.db, this.user, this.password, {
     host: this.host,
     ssl: true,
-    dialect: 'mysql',
+    dialect: 'postgres',
     // dialectOptions: {
     //   encrypt: true,
     // },
