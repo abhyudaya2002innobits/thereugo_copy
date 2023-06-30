@@ -5,14 +5,26 @@ import { sendError, sendSuccess } from "../../../common/resp-handler/respHandler
 
 class TenantController extends BaseController {
     constructor() {
-        super(new TenantService);
+        super(new TenantService());
         this.registerTenantController = this.registerTenantController.bind(this)
+        this.registerAdminWithTenantController = this.registerAdminWithTenantController.bind(this)
     }
 
     async registerTenantController(req: Request, res: Response) {
         try {
             const object = req.body
             var result = await this.service.registerTenantService(object)
+            return sendSuccess(res, result)
+        } catch(error) {
+            return sendError(res, error)
+        }
+    }
+
+
+    async registerAdminWithTenantController(req: Request, res: Response) {
+        try {
+            const object = req.body
+            var result = await this.service.registerTenantWithAdmin(object)
             return sendSuccess(res, result)
         } catch(error) {
             return sendError(res, error)

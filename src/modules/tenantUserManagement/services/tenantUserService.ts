@@ -22,18 +22,18 @@ class TenantUserService {
             });
             if (tenantUserExist) {
                 if (tenantUserExist.get()?.userName == object?.userName) {
-                    throw new Exception(ERROR_TYPE.ALREADY_EXISTS, "User with username already exist");
+                    throw new Exception(ERROR_TYPE.ALREADY_EXISTS, "Username already exist");
 
                 }
                 if (tenantUserExist.get()?.email == object?.email)
                     throw new Exception(
                         ERROR_TYPE.ALREADY_EXISTS,
-                        "Email already exists"
+                        "User with this email already exists"
                     );
                 if (tenantUserExist.get()?.contactNumber == object?.contactNumber) {
                     throw new Exception(
                         ERROR_TYPE.ALREADY_EXISTS,
-                        "Contact number already exists"
+                        "User with this Contact number already exists"
                     );
                 }
             } else {
