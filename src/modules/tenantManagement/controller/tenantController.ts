@@ -8,6 +8,7 @@ class TenantController extends BaseController {
         super(new TenantService());
         this.registerTenantController = this.registerTenantController.bind(this)
         this.registerAdminWithTenantController = this.registerAdminWithTenantController.bind(this)
+        this.getAllTenantsController = this.getAllTenantsController.bind(this)
     }
 
     async registerTenantController(req: Request, res: Response) {
@@ -25,6 +26,24 @@ class TenantController extends BaseController {
         try {
             const object = req.body
             var result = await this.service.registerTenantWithAdmin(object)
+            return sendSuccess(res, result)
+        } catch(error) {
+            return sendError(res, error)
+        }
+    }
+
+    async getAllTenantsController(req: Request, res: Response) {
+        try {
+            var result = await this.service.readAllTenants(req)
+            return sendSuccess(res, result)
+        } catch(error) {
+            return sendError(res, error)
+        }
+    }
+
+    async deleteTenantController(req: Request, res: Response) {
+        try {
+            var result = await this.service.deleteTenant(req)
             return sendSuccess(res, result)
         } catch(error) {
             return sendError(res, error)

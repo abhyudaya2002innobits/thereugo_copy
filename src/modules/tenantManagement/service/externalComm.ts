@@ -11,11 +11,12 @@ export default class TenalExternalComm {
 
     async createTenantAdmin(object: any) {
         try{
-            var tenantadmin = this.tenantUserService.createTenantUserService(object)
+            var tenantadmin = await this.tenantUserService.createTenantUserService(object)
             return Promise.resolve(tenantadmin)
         }catch(e){
             const {tenantId} = object;
-            await Tenant.destroy({where: tenantId})
+            console.log(">>>>>>>> tenant id", tenantId)
+            await Tenant.destroy({where: {tenantId: tenantId}})
             logger.error(e, "Error in creating tenant admin (extrCom)")
             return Promise.reject(e)
         }

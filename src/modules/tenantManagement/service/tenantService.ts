@@ -5,6 +5,7 @@ import Tenant from "../model/models";
 import TenalExternalComm from "./externalComm";
 import databaseInstance from "../../../database/dbConfig";
 import logger from "../../../common/logger";
+import { paginator } from "../../../common/pagination";
 
 class TenantService {
 
@@ -65,14 +66,11 @@ class TenantService {
 
             let tenantExist = await Tenant.findOne({
                 where: {
-                    [Op.or]: [
-                        { email: tenantData.email }, {
-                            tenantName: tenantData?.tenantName
-                        }, { contactNumber: tenantData?.contactNumber }
-                    ]
+                    [Op.or]: [{ email: tenantData?.email },
+                    { tenantName: tenantData?.tenantName },
+                    { contactNumber: tenantData?.contactNumber }]
                 }
             });
-            console.log(">>>>>>>>>>>>", tenantExist?.get()?.contactNumber == tenantData?.contactNumber)
 
             if (tenantExist) {
                 if (tenantExist.get()?.tenantName == tenantData?.tenantName) {
@@ -85,10 +83,8 @@ class TenantService {
                         "Organization with this email already exists"
                     );
                 }
-                console.log(">>>>>>>>>>>>", tenantExist.get()?.contactNumber == tenantData?.contactNumber)
 
                 if (tenantExist.get()?.contactNumber == tenantData?.contactNumber) {
-                    console.log(">>>>>>>>>>>>", tenantExist.get()?.contactNumber == tenantData?.contactNumber)
                     throw new Exception(
                         ERROR_TYPE.ALREADY_EXISTS,
                         "Organization with this contact number already exists"
@@ -106,7 +102,74 @@ class TenantService {
             return Promise.reject(e);
 
         }
+    }
 
+    async readAllTenants(req: any) {
+        try {
+
+            let { limit, sortBy = "tenantName", sortOrder = "ASC", search, isActive } = req.query;
+            //pagination for result of get users
+            let query = paginator({ sortBy, sortOrder, search }, [
+                "tenantName",
+            ]);
+
+            if (undefined == sortBy) { sortBy = 'tenantName' }
+            if (undefined == sortOrder) { sortOrder = 'ASC' }
+
+            let where = {};
+
+            console.log(query, ">>>orgss")
+
+            // query on basis of isActive
+            if (isActive != undefined) {
+                where = {
+                    ...where,
+                    isActive: {
+                        [Op.eq]: isActive === "true" || isActive === "1",
+                    },
+                };
+            }
+            console.log(isActive, ">>>orgss")
+
+
+            let OrganizationData = await Tenant.findAndCountAll({
+                where: {
+                    ...query.where,
+                    ...where,
+                },
+                limit: query.limit,
+                offset: query.offset,
+                order: query.order,
+            })
+            console.log(OrganizationData, ">>>orgss")
+            return Promise.resolve(OrganizationData.rows)
+        } catch (error) {
+            return Promise.reject(error)
+        }
+
+    }
+
+    async deleteTenant(req: any) {
+        try {
+            let tenantId = req.params.id
+            let organization = await Tenant.findOne({
+                where: {
+                    tenantId: tenantId
+                },
+            })
+
+            if ((!organization)) {
+                throw new Exception(ERROR_TYPE.NOT_FOUND, `Organization not found`)
+            }
+            // delete organization 
+            await Tenant.destroy({ where: { tenantId: tenantId } })
+            console.log(organization, ">>>orgss")
+            return Promise.resolve({
+                message: `${organization?.tenantName} successfully Deleted.`,
+            })
+        } catch (error) {
+            return Promise.reject(error)
+        }
 
     }
 }

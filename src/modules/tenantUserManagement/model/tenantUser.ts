@@ -4,7 +4,7 @@ import sequelize from "sequelize";
 import { EnumType } from "typescript";
 
 export interface TenantUserAttributes {
-    tenantUserId: string;
+    tenantUserId?: string;
     firstName: string;
     lastName: string;
     contactNumber: string;
@@ -12,15 +12,15 @@ export interface TenantUserAttributes {
     isActive: boolean;
     userName: string;
     password: string;
-    imageUrl: string;
+    imageUrl?: string;
     tenantId: string;
     roleName: string;
-    createdAt: Date;
-    createdBy: string;
-    updatedAt: Date
-    updatedBy: string;
-    deletedAt: Date;
-    deletedBy: string;
+    createdAt?: Date;
+    createdBy?: string;
+    updatedAt?: Date
+    updatedBy?: string;
+    deletedAt?: Date;
+    deletedBy?: string;
 }
 
 class TenantUser extends Model<TenantUserAttributes> {
@@ -135,6 +135,6 @@ TenantUser.init(
             allowNull: true
         }
     },
-    { sequelize: databaseInstance, tableName: "tenantUsers", timestamps: true, paranoid: true }
+    { sequelize: databaseInstance, tableName: "tenantUsers", timestamps: true, paranoid: false }
 );
 export default TenantUser;

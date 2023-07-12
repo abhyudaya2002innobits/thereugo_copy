@@ -11,6 +11,7 @@ class TenantRoutes {
     private tenantRouting() {
         this.tenantRouter.route("/api/v1/register/tenant").post(this.tenantController.registerTenantController);
         this.tenantRouter.route("/api/v1/register/tenant-admin").post(this.tenantController.registerAdminWithTenantController);
+        this.tenantRouter.route("/api/v1/tenants").get(this.tenantController.getAllTenantsController);
     }
 }
 const tenantRouter = new TenantRoutes().tenantRouter

@@ -4,7 +4,7 @@ import { validationResult } from 'express-validator';
 import logger from "../logger";
 
 
-export class Validator {
+export class GlobalValidator {
     rules: any
     constructor(rules: any) {
         this.rules = rules

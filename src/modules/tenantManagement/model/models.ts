@@ -149,6 +149,6 @@ Tenant.init(
             allowNull: true
         }
     },
-    { sequelize: databaseInstance, tableName: "tenants", timestamps: true, paranoid: true }
+    { sequelize: databaseInstance, tableName: "tenants", timestamps: true, paranoid: false }
 );
 export default Tenant;
