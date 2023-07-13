@@ -15,7 +15,6 @@ module.exports = {
         isActive: true,
         registeredWith: 'creds',
         subscriptionStatus: false,
-        userName: "inactive_123",
         password: 'User@123',
         createdAt: new Date(),
         updatedAt: new Date()
@@ -28,7 +27,6 @@ module.exports = {
         isActive: true,
         registeredWith: 'creds',
         subscriptionStatus: true,
-        userName: "active_123",
         password: 'User@123',
         createdAt: new Date(),
         updatedAt: new Date()

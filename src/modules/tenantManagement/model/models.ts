@@ -59,54 +59,54 @@ Tenant.init(
 
         tenantName: {
             type: sequelize.STRING,
-            allowNull: false
+            allowNull: true
         },
 
         contactNumber: {
             type: sequelize.STRING,
-            allowNull: false,
+            allowNull: true,
             unique: true
         },
 
         email: {
             type: sequelize.STRING,
-            allowNull: false,
+            allowNull: true,
             unique: true,
         },
 
         description: {
             type: sequelize.STRING,
-            allowNull: false,
+            allowNull: true,
         },
 
         isActive: {
             type: sequelize.BOOLEAN,
-            allowNull: false
+            allowNull: true
         },
 
         address1: {
             type: sequelize.STRING,
-            allowNull: false,
+            allowNull: true,
         },
 
         city: {
             type: sequelize.STRING,
-            allowNull: false,
+            allowNull: true,
         },
 
         state: {
             type: sequelize.STRING,
-            allowNull: false,
+            allowNull: true,
         },
 
         country: {
             type: sequelize.STRING,
-            allowNull: false,
+            allowNull: true,
         },
 
         pincode: {
             type: sequelize.STRING,
-            allowNull: false,
+            allowNull: true,
         },
 
         address2: {
@@ -121,7 +121,7 @@ Tenant.init(
 
         createdAt: {
             type: sequelize.DATE,
-            allowNull: false
+            allowNull: true
         },
 
         createdBy: {

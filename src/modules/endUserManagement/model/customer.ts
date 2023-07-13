@@ -9,7 +9,6 @@ export interface EndUserAttributes {
     contactNumber: string;
     email: string;
     isActive: boolean;
-    userName: string;
     registeredWith: string;
     subscriptionStatus: boolean;
     socialMediaId: string;
@@ -28,9 +27,8 @@ class EndUser extends Model<EndUserAttributes> {
     declare fullName: string;
     declare email: string;
     declare socialMediaId?: string;
-    declare contactNumber: string;
+    declare contactNumber?: string;
     declare isActive?: boolean;
-    declare userName: string;
     declare password: string;
     declare registeredWith: string;
     declare subscriptionStatus: boolean;
@@ -55,34 +53,27 @@ EndUser.init(
 
         fullName: {
             type: sequelize.STRING,
-            allowNull: false
+            allowNull: true
         },
 
         contactNumber: {
             type: sequelize.STRING,
-            allowNull: false,
-            unique: true
+            allowNull: true,
         },
 
         email: {
             type: sequelize.STRING,
-            allowNull: false,
-            unique: true,
-        },
-
-        userName: {
-            type: sequelize.STRING,
-            allowNull: false,
+            allowNull: true,
         },
 
         subscriptionStatus: {
             type: sequelize.BOOLEAN,
-            allowNull: false
+            allowNull: true
         },
 
         registeredWith: {
             type: sequelize.STRING,
-            allowNull: false
+            allowNull: true
         },
 
         socialMediaId: {
@@ -92,12 +83,12 @@ EndUser.init(
 
         isActive: {
             type: sequelize.BOOLEAN,
-            allowNull: false
+            allowNull: true
         },
 
         password: {
             type: sequelize.STRING,
-            allowNull: false,
+            allowNull: true,
         },
 
         imageUrl: {
@@ -107,7 +98,7 @@ EndUser.init(
 
         createdAt: {
             type: sequelize.DATE,
-            allowNull: false
+            allowNull: true
         },
 
         createdBy: {

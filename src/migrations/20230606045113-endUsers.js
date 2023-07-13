@@ -16,34 +16,22 @@ module.exports = {
 
       fullName: {
         type: Sequelize.DataTypes.STRING,
-        require: true,
-        allowNull: false
-      },
-
-      userName: {
-        type: Sequelize.DataTypes.STRING,
-        require: true,
-        allowNull: false,
-        unique: true
+        allowNull: true
       },
 
       password: {
         type: Sequelize.DataTypes.STRING,
-        require: true,
-        allowNull: false
+        allowNull: true
       },
 
       contactNumber: {
         type: Sequelize.DataTypes.STRING,
-        require: true,
-        allowNull: false
+        allowNull: true
       },
       
       email:{
         type: Sequelize.DataTypes.STRING,
-        require: true,
-        allowNull: false,
-        unique: true,
+        allowNull: true,
       },
 
       registeredWith:{
@@ -68,14 +56,13 @@ module.exports = {
 
       subscriptionStatus: {
         type: Sequelize.DataTypes.BOOLEAN,
-        require: true,
-        allowNull: false
+        allowNull: true
       },
 
       createdAt: {
         type: Sequelize.DataTypes.DATE,
         default: Sequelize.literal('CURRENT_TIMESTAMP'),
-        allowNull: false
+        allowNull: true
       },
 
       createdBy: {

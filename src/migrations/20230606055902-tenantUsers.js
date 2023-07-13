@@ -14,47 +14,29 @@ module.exports = {
         unique: true
       },
 
-      firstName: {
-        type: Sequelize.DataTypes.STRING,
-        require: true,
-        allowNull: false
-      },
-
-      lastName: {
+      fullName: {
         type: Sequelize.DataTypes.STRING,
         allowNull: true
       },
 
-      userName: {
-        type: Sequelize.DataTypes.STRING,
-        require: true,
-        allowNull: false,
-        unique: true
-      },
-
       password: {
         type: Sequelize.DataTypes.STRING,
-        require: true,
-        allowNull: false
+        allowNull: true
       },
 
       contactNumber: {
         type: Sequelize.DataTypes.STRING,
-        require: true,
-        allowNull: false
+        allowNull: true
       },
 
       email: {
         type: Sequelize.DataTypes.STRING,
-        require: true,
-        allowNull: false,
-        unique: true,
+        allowNull: true,
       },
 
       roleName: {
         type: Sequelize.DataTypes.STRING,
-        require: true,
-        allowNull: false,
+        allowNull: true,
       },
 
       imageUrl: {
@@ -75,13 +57,13 @@ module.exports = {
           },
           key: 'tenantId'
         },
-        allowNull: false
+        allowNull: true
       },
 
       createdAt: {
         type: Sequelize.DataTypes.DATE,
         default: Sequelize.literal('CURRENT_TIMESTAMP'),
-        allowNull: false
+        allowNull: true
       },
 
       createdBy: {

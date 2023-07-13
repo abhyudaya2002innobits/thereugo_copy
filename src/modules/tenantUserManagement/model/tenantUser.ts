@@ -5,12 +5,10 @@ import { EnumType } from "typescript";
 
 export interface TenantUserAttributes {
     tenantUserId?: string;
-    firstName: string;
-    lastName: string;
+    fullName: string;
     contactNumber: string;
     email: string;
     isActive: boolean;
-    userName: string;
     password: string;
     imageUrl?: string;
     tenantId: string;
@@ -25,14 +23,12 @@ export interface TenantUserAttributes {
 
 class TenantUser extends Model<TenantUserAttributes> {
     declare tenantUserId: string;
-    declare firstName: string;
-    declare lastName?: string;
+    declare fullName: string;
     declare email: string;
     declare contactNumber: string;
     declare isActive?: boolean;
     declare tenantId: string;
     declare roleName: string;
-    declare userName: string;
     declare password: string;
     declare imageUrl?: CreationOptional<string>;
     declare createdAt: Date;
@@ -53,14 +49,9 @@ TenantUser.init(
             unique: true
         },
 
-        firstName: {
+        fullName: {
             type: sequelize.STRING,
             allowNull: false
-        },
-
-        lastName: {
-            type: sequelize.STRING,
-            allowNull: true
         },
 
         contactNumber: {
@@ -73,11 +64,6 @@ TenantUser.init(
             type: sequelize.STRING,
             allowNull: false,
             unique: true,
-        },
-
-        userName: {
-            type: sequelize.STRING,
-            allowNull: false,
         },
 
         isActive: {

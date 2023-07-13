@@ -16,13 +16,11 @@ module.exports = {
       await queryInterface.bulkInsert('tenantUsers', [{
         tenantUserId: uuidv4(),
         tenantId: userExist?.tenantId,
-        firstName: 'super',
-        lastName: 'admin',
+        fullName: 'super admin',
         email: 'super@admin.com',
         contactNumber: '9910234534',
         isActive: true,
         roleName: "admin",
-        userName: "super@123",
         password: 'admin@123',
         createdAt: new Date(),
         updatedAt: new Date()

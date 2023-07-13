@@ -16,29 +16,22 @@ module.exports = {
 
       tenantName: {
         type: Sequelize.DataTypes.STRING,
-        require: true,
-        allowNull: false,
-        unique: true
+        allowNull: true,
       },
 
       contactNumber: {
         type: Sequelize.DataTypes.STRING,
-        require: true,
-        allowNull: false,
-        unique: true
+        allowNull: true,
       },
       
       email:{
         type: Sequelize.DataTypes.STRING,
-        require: true,
-        allowNull: false,
-        unique: true,
+        allowNull: true,
       },
 
       description:{
         type: Sequelize.DataTypes.STRING,
-        require: true,
-        allowNull: false,
+        allowNull: true,
       },
 
       isActive: {
@@ -48,32 +41,27 @@ module.exports = {
 
       address1:{
         type: Sequelize.DataTypes.STRING,
-        require: true,
-        allowNull: false,
+        allowNull: true,
       },
 
       city:{
         type: Sequelize.DataTypes.STRING,
-        require: true,
-        allowNull: false,
+        allowNull: true,
       },
 
       state:{
         type: Sequelize.DataTypes.STRING,
-        require: true,
-        allowNull: false,
+        allowNull: true,
       },
 
       country:{
         type: Sequelize.DataTypes.STRING,
-        require: true,
-        allowNull: false,
+        allowNull: true,
       },
 
       pincode:{
         type: Sequelize.DataTypes.STRING,
-        require: true,
-        allowNull: false,
+        allowNull: true,
       },
 
       address2:{

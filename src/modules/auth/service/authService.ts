@@ -19,11 +19,11 @@ class AuthService {
             console.log(object?.userName, "username")
             let userExist = await EndUser.findOne({
                 where: {
-                    userName: object?.userName
+                    email: object?.email
                 }
             })
             if (!userExist) {
-                throw new Exception(ERROR_TYPE.UNAUTHORIZED, `The user with username does not exist.`);
+                throw new Exception(ERROR_TYPE.UNAUTHORIZED, `The user with email does not exist.`);
             }
             console.log(userExist.password, "KKKKKK")
             if (object?.password != userExist?.password) {
@@ -73,11 +73,11 @@ class AuthService {
         try {
             let tenantUserExist = await TenantUser.findOne({
                 where: {
-                    userName: object?.userName
+                    email: object?.email
                 }
             })
             if (!tenantUserExist) {
-                throw new Exception(ERROR_TYPE.UNAUTHORIZED, `The user with username does not exist.`);
+                throw new Exception(ERROR_TYPE.UNAUTHORIZED, `The user with email does not exist.`);
             }
             console.log(tenantUserExist.password, "KKKKKK")
             if (object?.password != tenantUserExist?.password) {

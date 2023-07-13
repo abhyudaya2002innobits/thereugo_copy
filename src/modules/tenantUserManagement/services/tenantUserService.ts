@@ -17,15 +17,10 @@ class TenantUserService {
             let tenantUserExist = await TenantUser.findOne({
                 where: {
                     [Op.or]: [{ email: object?.userEmail },
-                    { userName: object?.userName },
                     { contactNumber: object?.mobile }]
                 }
             });
             if (tenantUserExist) {
-                if (tenantUserExist.get()?.userName == object?.userName) {
-                    throw new Exception(ERROR_TYPE.ALREADY_EXISTS, "Username already exist");
-
-                }
                 if (tenantUserExist.get()?.email == object?.userEmail)
                     throw new Exception(
                         ERROR_TYPE.ALREADY_EXISTS,
@@ -39,16 +34,14 @@ class TenantUserService {
                 }
             } else {
                 newTenant = await TenantUser.create({
-                    firstName: object.firstName,
+                    fullName: object.fullName,
                     email: object.userEmail,
                     contactNumber: object.mobile,
                     password: object.password,
                     isActive: true,
-                    lastName: object.lastName,
                     roleName: "Organization Admin",
                     tenantId: object.tenantId,
                     createdBy: object.createdBy,
-                    userName: object.userName
                 });
                 return Promise.resolve(newTenant);
             }

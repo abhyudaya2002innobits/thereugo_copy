@@ -16,10 +16,10 @@ class CustomerService {
         try {
             var newCustomer;
             let userExist = await EndUser.findOne({ where : {
-                userName : object?.userName
+                email : object?.email
             }});
             if (userExist) {
-                throw new Exception(ERROR_TYPE.ALREADY_EXISTS,"User with username already exist");
+                throw new Exception(ERROR_TYPE.ALREADY_EXISTS,"User with email already exist");
             } else {
                     newCustomer = await EndUser.create(object);
                     await this.sendEmails(object);
