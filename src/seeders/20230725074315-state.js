@@ -2,7 +2,7 @@
 
 const { v4: uuidv4 } = require('uuid');
 import { default as logger } from "../common/logger";
-import CountryCity from "../modules/poiManagement/model/countryCItyModel";
+import CountryCity from "../modules/countryDataManagement/model/countryCItyModel";
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
