@@ -14,17 +14,22 @@ module.exports = {
           unique: true
         },
 
-        countryName: {
+        entityKey: {
           type: Sequelize.DataTypes.STRING,
           allowNull: true,
         },
 
-        stateName: {
+        entityValue: {
           type: Sequelize.DataTypes.STRING,
           allowNull: true,
         },
 
-        cityName: {
+        stateParentId: {
+          type: Sequelize.DataTypes.STRING,
+          allowNull: true,
+        },
+
+        cityParentId: {
           type: Sequelize.DataTypes.STRING,
           allowNull: true,
         },

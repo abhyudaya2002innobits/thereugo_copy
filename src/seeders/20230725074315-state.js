@@ -2,30 +2,39 @@
 
 const { v4: uuidv4 } = require('uuid');
 import { default as logger } from "../common/logger";
+import CountryCity from "../modules/poiManagement/model/countryCItyModel";
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
     try {
+      let countryExist = await CountryCity.findOne({
+        where: {
+          entityValue: 'India',
+        }
+      });
       queryInterface.bulkInsert("countryCity", [{
         countryCityId: uuidv4(),
-        cityName: "Delhi",
-        stateName: "Delhi",
-        countryName: "India",
+        entityKey: "state",
+        entityValue: "Delhi",
+        stateParentId: countryExist?.cityParentId,
+        cityParentId: "",
         updatedAt: new Date(),
         createdAt: new Date(),
       },
       {
         countryCityId: uuidv4(),
-        cityName: "Noida",
-        stateName: "Uttar Pradesh",
-        countryName: "India",
+        entityKey: "state",
+        entityValue: "Alaska",
+        stateParentId: countryExist?.countryCityId,
+        cityParentId: "",
         updatedAt: new Date(),
         createdAt: new Date(),
-      }])
-      logger.info('country city seeder run successfully')
+      },
+      ])
+      logger.info('country seeder run successfully')
     } catch (error) {
-      console.log("error in running country city seeder", error)
+      console.log("error in running country seeder", error)
     }
   },
 
