@@ -19,6 +19,11 @@ module.exports = {
           allowNull: true,
         },
 
+        stateName: {
+          type: Sequelize.DataTypes.STRING,
+          allowNull: true,
+        },
+
         cityName: {
           type: Sequelize.DataTypes.STRING,
           allowNull: true,
