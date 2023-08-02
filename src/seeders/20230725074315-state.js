@@ -17,7 +17,7 @@ module.exports = {
         countryCityId: uuidv4(),
         entityKey: "state",
         entityValue: "Delhi",
-        stateParentId: countryExist?.cityParentId,
+        stateParentId: countryExist?.countryCityId,
         cityParentId: "",
         updatedAt: new Date(),
         createdAt: new Date(),

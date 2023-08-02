@@ -10,8 +10,8 @@ class CountryCityRoutes {
 
     private countryCityRouting() {
         this.countryCityRouter.route("/api/v1/unlockCountry").post(this.countryCityController.createCountryDataController)
+        this.countryCityRouter.route("/api/v1/unlockCountry").get(this.countryCityController.getAllCountryData)
     }
 }
-
 const countryCityRouter = new CountryCityRoutes().countryCityRouter
 export default countryCityRouter;
