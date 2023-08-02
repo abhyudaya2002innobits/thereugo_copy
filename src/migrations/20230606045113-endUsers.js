@@ -40,7 +40,7 @@ module.exports = {
       },
 
       socialMediaId: {
-        type: Sequelize.DataTypes.UUID,
+        type: Sequelize.DataTypes.STRING,
         allowNull: true
       },
 

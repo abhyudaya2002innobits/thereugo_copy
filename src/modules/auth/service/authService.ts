@@ -6,11 +6,36 @@ import bcrypt from 'bcryptjs';
 import EndUser from "../../endUserManagement/model/customer";
 import TenantUser from "../../tenantUserManagement/model/tenantUser";
 import { Op } from "sequelize";
+import { PLATFORMS } from "../../../common/constants/enums";
 
 class AuthService {
     constructor() {
         this.loginWithCred = this.loginWithCred.bind(this);
         this.tenantUserLoginService = this.tenantUserLoginService.bind(this);
+        this.checkEmailBeforeLogin = this.checkEmailBeforeLogin.bind(this);
+        this.authWithFb = this.authWithFb.bind(this);
+        this.authWithGoogle = this.authWithGoogle.bind(this);
+        this.loginWithSocialMedia = this.loginWithSocialMedia.bind(this);
+    }
+
+    //check email before login
+    async checkEmailBeforeLogin(object: any) {
+        try {
+            let emailExist = await EndUser.findOne({
+                where: {
+                    email: object?.email
+                }
+            })
+
+            if (emailExist) {
+                return Promise.resolve(emailExist)
+            } else {
+                throw new Exception(ERROR_TYPE.NOT_FOUND, "User with this email does not exist")
+            }
+        } catch (e) {
+            console.log(e, "error in checking email of the end user")
+            return Promise.reject(e)
+        }
     }
 
     //login function for end user using credentials
@@ -38,17 +63,36 @@ class AuthService {
         }
     }
 
+    async loginWithSocialMedia(object: any) {
+        try {
+            if (object?.registeredWith == PLATFORMS.facebook) {
+                var result = await this.authWithFb(object)
+                return Promise.resolve(result)
+            } else if (object?.registeredWith == PLATFORMS.google) {
+                var result = await this.authWithGoogle(object)
+                return Promise.resolve(result)
+            }
+        } catch (e) {
+            console.log(e, "error in auth with platform")
+            return Promise.reject(e);
+        }
+    }
+
     //login/signup function for end user using facebook
     async authWithFb(object: any) {
         try {
-            let userExist = await EndUser.findOne({ where: { socialMediaId: object?.socialMediaId } })
+            let userExist = await EndUser.findOne({ where: { [Op.or]: [{ email: object?.email }, { socialMediaId: object?.socialMediaId }] } })
             if (userExist) {
+                userExist.socialMediaId = object?.socialMediaId
+                userExist.registeredWith = object?.registeredWith
+                await userExist.save()
                 return Promise.resolve(userExist);
             } else {
                 let newUser = await EndUser.create(object);
                 return Promise.resolve(newUser);
             }
         } catch (e) {
+            console.log(e, "error in auth fb")
             return Promise.reject(e);
         }
     }
@@ -56,14 +100,18 @@ class AuthService {
     //login/signup function for end user using google
     async authWithGoogle(object: any) {
         try {
-            let userExist = await EndUser.findOne({ where: { socialMediaId: object?.socialMediaId } })
+            let userExist = await EndUser.findOne({ where: { [Op.or]: [{ email: object?.email }, { socialMediaId: object?.socialMediaId }] } })
             if (userExist) {
+                userExist.socialMediaId = object?.socialMediaId
+                userExist.registeredWith = object?.registeredWith
+                await userExist.save()
                 return Promise.resolve(userExist);
             } else {
                 let newUser = await EndUser.create(object);
                 return Promise.resolve(newUser);
             }
         } catch (e) {
+            console.log(e, "error in auth google")
             return Promise.reject(e);
         }
     }
