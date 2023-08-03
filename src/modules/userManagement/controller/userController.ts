@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import BaseController from "../../../common/baseController/baseController";
 import { sendError, sendSuccess } from "../../../common/resp-handler/respHandler";
-import CustomerService from "../service/customerService";
+import CustomerService from "../service/userService";
 
 class CustomerController extends BaseController {
     constructor() {

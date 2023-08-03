@@ -1,7 +1,7 @@
 import logger from "../../../common/logger";
 import { Exception } from "../../../common/resp-handler";
 import { ERROR_TYPE } from "../../../common/resp-handler/constants";
-import EndUser from "../model/customer";
+import EndUser from "../model/user";
 import nodemailer from 'nodemailer'
 const dotenv = require('dotenv')
 dotenv.config()

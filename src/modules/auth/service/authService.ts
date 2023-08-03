@@ -3,7 +3,7 @@ import { Exception } from "../../../common/resp-handler";
 import { ERROR_TYPE } from "../../../common/resp-handler/constants";
 // import { User } from "../../users/model/user";
 import bcrypt from 'bcryptjs';
-import EndUser from "../../endUserManagement/model/customer";
+import EndUser from "../../userManagement/model/user";
 import TenantUser from "../../tenantUserManagement/model/tenantUser";
 import { Op } from "sequelize";
 import { PLATFORMS } from "../../../common/constants/enums";

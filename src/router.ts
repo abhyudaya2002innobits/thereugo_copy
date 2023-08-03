@@ -1,7 +1,7 @@
 import { Router } from "express"
 // import KeonnRouter from "./modules/deviceManager/routes"\
 import authRouter from "./modules/auth/routes/authRoutes"
-import customerRouter from "./modules/endUserManagement/routes/customerRoutes";
+import customerRouter from "./modules/userManagement/routes/userRoutes";
 import tenantRouter from "./modules/tenantManagement/routes/tenantRoutes";
 import tenantUserRouter from "./modules/tenantUserManagement/routes/tenantUserRoutes";
 import countryCityRouter from "./modules/countryDataManagement/routes/routes";
