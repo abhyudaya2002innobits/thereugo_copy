@@ -12,6 +12,7 @@ export class GlobalValidator {
 
     makeValidation(key: string): any {
         try {
+            console.log(key,">>>>>>>>>>>key")
             if (!key) {
                 throw new Error(`Invalid validator key '${key}' supplied.`)
             }

@@ -41,7 +41,6 @@ class AuthService {
     //login function for end user using credentials
     async loginWithCred(object: any) {
         try {
-            console.log(object?.userName, "username")
             let userExist = await EndUser.findOne({
                 where: {
                     email: object?.email
@@ -69,7 +68,9 @@ class AuthService {
                 var result = await this.authWithFb(object)
                 return Promise.resolve(result)
             } else if (object?.registeredWith == PLATFORMS.google) {
+                console.log(object,"object>>>>>>>>>>>>")
                 var result = await this.authWithGoogle(object)
+                console.log(result, "resulrt>>.>>>>")
                 return Promise.resolve(result)
             }
         } catch (e) {
@@ -81,7 +82,9 @@ class AuthService {
     //login/signup function for end user using facebook
     async authWithFb(object: any) {
         try {
-            let userExist = await EndUser.findOne({ where: { [Op.or]: [{ email: object?.email }, { socialMediaId: object?.socialMediaId }] } })
+            console.log(object.email, "emailllll")
+            let userExist = await EndUser.findOne({ where: { [Op.or]: [{ email: object?.email }, { socialMediaId: object?.socialMediaId }, {contactNumber: object?.contactNumber}] } })
+            console.log(userExist, "resulrt>>.>>>>")
             if (userExist) {
                 userExist.socialMediaId = object?.socialMediaId
                 userExist.registeredWith = object?.registeredWith
@@ -100,7 +103,28 @@ class AuthService {
     //login/signup function for end user using google
     async authWithGoogle(object: any) {
         try {
-            let userExist = await EndUser.findOne({ where: { [Op.or]: [{ email: object?.email }, { socialMediaId: object?.socialMediaId }] } })
+            let where = {}
+            if (object?.socialMediaId && !object?.email && !object.contactNumber) {
+                where = { socialMediaId: object?.socialMediaId }
+            } else if (object?.socialMediaId && object?.email && !object?.contactNumber) {
+                where = { [Op.or]: [
+                    { email: object?.email },
+                    { socialMediaId: object?.socialMediaId }
+                ] }
+            } else if (object?.socialMediaId && !object?.email && object?.contactNumber) {
+                where = { [Op.or]: [
+                    { contactNumber: object?.contactNumber },
+                    { socialMediaId: object?.socialMediaId }
+                ] }
+            } else {
+                where = { [Op.or]: [
+                    { email: object?.email },
+                    { contactNumber: object?.contactNumber },
+                    { socialMediaId: object?.socialMediaId }
+                ] }
+            }
+            console.log(where, "whereee>>>>>>>>>>")
+            let userExist = await EndUser.findOne({ where: { ...where }})
             if (userExist) {
                 userExist.socialMediaId = object?.socialMediaId
                 userExist.registeredWith = object?.registeredWith

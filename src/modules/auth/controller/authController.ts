@@ -29,6 +29,7 @@ class AuthController extends BaseController {
 
     async loginWithSocialMediaController(req: Request, res: Response) {
         try {
+            console.log(req, "req>>>>>>>>>>>>>>>>>>>>")
             let object = req.body;
             var result = await this.service.loginWithSocialMedia(object)
             return sendSuccess(res, result)
