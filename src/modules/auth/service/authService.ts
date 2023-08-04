@@ -82,8 +82,27 @@ class AuthService {
     //login/signup function for end user using facebook
     async authWithFb(object: any) {
         try {
-            console.log(object.email, "emailllll")
-            let userExist = await EndUser.findOne({ where: { [Op.or]: [{ email: object?.email }, { socialMediaId: object?.socialMediaId }, {contactNumber: object?.contactNumber}] } })
+            let where = {}
+            if (object?.socialMediaId && !object?.email && !object.contactNumber) {
+                where = { socialMediaId: object?.socialMediaId }
+            } else if (object?.socialMediaId && object?.email && !object?.contactNumber) {
+                where = { [Op.or]: [
+                    { email: object?.email },
+                    { socialMediaId: object?.socialMediaId }
+                ] }
+            } else if (object?.socialMediaId && !object?.email && object?.contactNumber) {
+                where = { [Op.or]: [
+                    { contactNumber: object?.contactNumber },
+                    { socialMediaId: object?.socialMediaId }
+                ] }
+            } else {
+                where = { [Op.or]: [
+                    { email: object?.email },
+                    { contactNumber: object?.contactNumber },
+                    { socialMediaId: object?.socialMediaId }
+                ] }
+            }
+            let userExist = await EndUser.findOne({ where: { ...where} })
             console.log(userExist, "resulrt>>.>>>>")
             if (userExist) {
                 userExist.socialMediaId = object?.socialMediaId
@@ -123,7 +142,6 @@ class AuthService {
                     { socialMediaId: object?.socialMediaId }
                 ] }
             }
-            console.log(where, "whereee>>>>>>>>>>")
             let userExist = await EndUser.findOne({ where: { ...where }})
             if (userExist) {
                 userExist.socialMediaId = object?.socialMediaId
