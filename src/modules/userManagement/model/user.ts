@@ -12,6 +12,7 @@ export interface EndUserAttributes {
     registeredWith: string;
     subscriptionStatus: boolean;
     socialMediaId: string;
+    isExist: boolean;
     password: string;
     imageUrl: string;
     createdAt: Date;
@@ -30,6 +31,7 @@ class EndUser extends Model<EndUserAttributes> {
     declare contactNumber?: string;
     declare isActive?: boolean;
     declare password: string;
+    declare isExist: boolean;
     declare registeredWith: string;
     declare subscriptionStatus: boolean;
     declare imageUrl?: CreationOptional<string>;
@@ -73,6 +75,11 @@ EndUser.init(
 
         registeredWith: {
             type: sequelize.STRING,
+            allowNull: true
+        },
+
+        isExist: {
+            type: sequelize.BOOLEAN,
             allowNull: true
         },
 

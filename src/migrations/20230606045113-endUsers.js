@@ -54,6 +54,11 @@ module.exports = {
         allowNull: true
       },
 
+      isExist: {
+        type: Sequelize.DataTypes.BOOLEAN,
+        allowNull: true
+      },
+
       subscriptionStatus: {
         type: Sequelize.DataTypes.BOOLEAN,
         allowNull: true

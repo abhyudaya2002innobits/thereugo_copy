@@ -22,7 +22,7 @@ class CustomerService {
                 throw new Exception(ERROR_TYPE.ALREADY_EXISTS,"User with email already exist");
             } else {
                     newCustomer = await EndUser.create(object);
-                    await this.sendEmails(object);
+                    // await this.sendEmails(object);
                 return Promise.resolve(newCustomer);
             }
         } catch (e) {

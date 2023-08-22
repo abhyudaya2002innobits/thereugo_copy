@@ -1,6 +1,6 @@
 const PLATFORMS = {
     facebook : "facebook",
-    google : "google"
+    google : "google.com"
 }
 
 export {PLATFORMS}

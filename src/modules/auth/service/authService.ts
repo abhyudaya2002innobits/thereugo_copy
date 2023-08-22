@@ -1,6 +1,6 @@
 import logger from "../../../common/logger";
 import { Exception } from "../../../common/resp-handler";
-import { ERROR_TYPE } from "../../../common/resp-handler/constants";
+import { ERROR_TYPE, RESPONSE_STATUS } from "../../../common/resp-handler/constants";
 // import { User } from "../../users/model/user";
 import bcrypt from 'bcryptjs';
 import EndUser from "../../userManagement/model/user";
@@ -21,6 +21,7 @@ class AuthService {
     //check email before login
     async checkEmailBeforeLogin(object: any) {
         try {
+            console.log("email check")
             let emailExist = await EndUser.findOne({
                 where: {
                     email: object?.email
@@ -28,9 +29,9 @@ class AuthService {
             })
 
             if (emailExist) {
-                return Promise.resolve(emailExist)
+                return Promise.resolve({message:"User with this email exist"})
             } else {
-                throw new Exception(ERROR_TYPE.NOT_FOUND, "User with this email does not exist")
+                throw new Exception(ERROR_TYPE.UNAUTHORIZED, "User with this email does not exist")
             }
         } catch (e) {
             console.log(e, "error in checking email of the end user")
@@ -47,11 +48,11 @@ class AuthService {
                 }
             })
             if (!userExist) {
-                throw new Exception(ERROR_TYPE.UNAUTHORIZED, `The user with email does not exist.`);
+                throw new Exception(RESPONSE_STATUS.UNAUTHORIZED,ERROR_TYPE.UNAUTHORIZED, `The user with email does not exist.`);
             }
             console.log(userExist.password, "KKKKKK")
             if (object?.password != userExist?.password) {
-                throw new Exception(ERROR_TYPE.NOT_FOUND, "Password does not match.")
+                throw new Exception(ERROR_TYPE.UNAUTHORIZED, "Password does not match.")
             }
             if (userExist && (object?.password == userExist?.password)) {
                 console.log("better")
@@ -64,6 +65,7 @@ class AuthService {
 
     async loginWithSocialMedia(object: any) {
         try {
+            console.log("data..............",object)
             if (object?.registeredWith == PLATFORMS.facebook) {
                 var result = await this.authWithFb(object)
                 return Promise.resolve(result)
@@ -107,10 +109,12 @@ class AuthService {
             if (userExist) {
                 userExist.socialMediaId = object?.socialMediaId
                 userExist.registeredWith = object?.registeredWith
+                userExist.isExist = true
                 await userExist.save()
                 return Promise.resolve(userExist);
             } else {
-                let newUser = await EndUser.create(object);
+                var userNotExist = {...object, isExist:false}
+                let newUser = await EndUser.create(userNotExist);
                 return Promise.resolve(newUser);
             }
         } catch (e) {
@@ -122,6 +126,7 @@ class AuthService {
     //login/signup function for end user using google
     async authWithGoogle(object: any) {
         try {
+            console.log("data..........22....",object)
             let where = {}
             if (object?.socialMediaId && !object?.email && !object.contactNumber) {
                 where = { socialMediaId: object?.socialMediaId }
@@ -146,10 +151,13 @@ class AuthService {
             if (userExist) {
                 userExist.socialMediaId = object?.socialMediaId
                 userExist.registeredWith = object?.registeredWith
+                userExist.isExist = true
                 await userExist.save()
                 return Promise.resolve(userExist);
             } else {
-                let newUser = await EndUser.create(object);
+                console.log(object,"object new")
+                var userNotExist = {...object, isExist:false}
+                let newUser = await EndUser.create(userNotExist);
                 return Promise.resolve(newUser);
             }
         } catch (e) {
