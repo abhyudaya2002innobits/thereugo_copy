@@ -8,10 +8,10 @@ class PrefRoutes {
     prefController = PrefController
     constructor() {
         this.prefRouting()
-
     }
     private prefRouting() {
         this.prefRouter.route("/api/v1/prefs").post(valid.makeValidation("create"), this.prefController.createPrefs);
+        this.prefRouter.route("/api/v1/prefs").get(this.prefController.getAllPrefController);
     }
 }
 

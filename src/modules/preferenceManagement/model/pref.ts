@@ -1,3 +1,4 @@
+import { raw } from "mysql2";
 import databaseInstance from "../../../database/dbConfig";
 import { Model, CreationOptional } from "sequelize";
 import sequelize from "sequelize";

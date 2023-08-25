@@ -8,6 +8,7 @@ class PrefController extends BaseController{
     constructor() {
         super(new PrefService()) 
         this.createPrefs = this.createPrefs.bind(this)
+        this.getAllPrefController = this.getAllPrefController.bind(this)
     }
 
     async createPrefs(req: Request, res: Response) {
@@ -19,6 +20,15 @@ class PrefController extends BaseController{
             logger.error(e)
             console.log("error in create pref controller")
             return sendError(res, e)
+        }
+    }
+
+    async getAllPrefController(req:Request, res: Response){
+        try{
+            var result = await this.service.getAllPrefService(req)
+            return sendSuccess(res, result)
+        }catch(e) {
+            console.log("error in get all prefs controller", e)
         }
     }
 }
