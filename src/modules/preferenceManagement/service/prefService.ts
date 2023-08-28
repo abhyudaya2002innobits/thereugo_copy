@@ -29,21 +29,16 @@ class PrefService {
     async getAllPrefService(req:any) {
         try {
             let prefs = await Preference.findAndCountAll();
-            let prefentityKey = [...new Set(prefs.rows.map((i)=>{
-                return i.entityKey
-            }))];
-            let result = prefentityKey.map((item)=>{
-                return {entityKey: item,entityValue:<any>[]}
-            })
-
-            for(let i=0;i<prefentityKey.length;i++){
-                for(let j=0;j<prefs.rows.length;j++){
-                    if(prefs.rows[j].entityKey===prefentityKey[i]){
-                        result[i].entityValue.push(prefs.rows[j]);
-                    }
+            let data:any=  prefs.rows.reduce((a:any,v:any)=>{
+                if(a[v.entityKey]){
+                    a[v.entityKey].entityValue.push(v);
                 }
-            }
-            return Promise.resolve(result)
+                else{
+                    a[v.entityKey]={entityKey:v.entityKey,entityValue:[v]}
+                }
+                return a;
+            },{});
+            return Promise.resolve(Object.values(data))
         }catch(e) {
         console.log("error in get all pref", e)
         return Promise.reject()

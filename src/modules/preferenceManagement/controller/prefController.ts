@@ -29,6 +29,7 @@ class PrefController extends BaseController{
             return sendSuccess(res, result)
         }catch(e) {
             console.log("error in get all prefs controller", e)
+            return sendError(res, e)
         }
     }
 }
