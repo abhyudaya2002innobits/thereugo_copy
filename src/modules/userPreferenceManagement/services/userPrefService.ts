@@ -1,50 +1,75 @@
 import { Op } from "sequelize";
 import logger from "../../../common/logger"
 import UserPref from "../model/userPref";
+import Preference from "../../preferenceManagement/model/pref";
 
 class UserPrefService {
     constructor() {
         this.setUserPrefService = this.setUserPrefService.bind(this)
-        this.getUserPrefByIdController = this.getUserPrefByIdController.bind(this)
+        this.getUserPrefById = this.getUserPrefById.bind(this)
+        this.update = this.update.bind(this)
+        this.deleteUserPrefs = this.deleteUserPrefs.bind(this);
     }
 
     async setUserPrefService(body: any) {
         try {
-            const { userId,prefs } = body
-            let createBody = prefs?.map((prefId: any) => {
+            const { userId,preferences } = body
+            let createBody = preferences?.map((prefId: any) => {
                 return {
                     userId: userId,
                     preferenceId: prefId
                 }
             })
-
             await UserPref.bulkCreate(createBody);
 
-            return Promise.resolve("User preferences saved successfully")
+            return Promise.resolve({data:{}, message:"User preferences saved successfully"})
         } catch (e) {
-            logger.error(e)
+            logger.error("Error in creating userprefs",e)
             return Promise.reject(e)
         }
     }
 
-    async getUserPrefByIdController(req: any) {
+    async getUserPrefById(params:any, query:any) {
         try {
+            const { userId } = params;
+            const { entityKey, entityValue } = query;
+            let result
+            let preferenceWhere = {}
+            if (entityKey) {
+                preferenceWhere = { ...preferenceWhere, entityKey: entityKey }
+            }
+            if (entityValue) {
+                preferenceWhere = { ...preferenceWhere, entityValue: entityValue }
+            }
+    
+                result = await UserPref.findAndCountAll(
+                    {
+                        where:{userId: userId},
+                        include: [
+                            {
+                                model: Preference,
+                                attributes: ['entityKey','entityValue'],
+                                where: preferenceWhere,
+                            }
+                        ]
+                    })
+            return Promise.resolve(result)
         } catch (e) {
-            logger.error(e)
-            return Promise.reject()
+            return Promise.reject(e)
+    
         }
     }
 
 
 // Delete userPrefs
-async deleteUserPrefs (body:any, params: any) {
+async deleteUserPrefs (params:any, body: any) {
     try{
         const { userId } = params;
-        const { preferenceIds = []} = body;
+        const { preferenceIds} = body;
             await UserPref.destroy({
                 where:{
                     userId: userId,
-                    prefId : {[Op.in] : preferenceIds}
+                    preferenceId : {[Op.in] : preferenceIds}
                 }
             })
 
@@ -52,7 +77,7 @@ async deleteUserPrefs (body:any, params: any) {
 
 
     } catch (err:any) {
-        console.log("Error in deleting user preferences",err)
+        logger.error("Error in deleting user preferences",err)
         return Promise.reject(err)
 
     }
@@ -77,14 +102,14 @@ async update (body:any, params: any) {
                         userId : userId
                     }
                 }
-                await this.deleteUserPrefs(deleteReq?.body, deleteReq?.params)
+                await this.deleteUserPrefs(deleteReq?.params, deleteReq?.body)
             }
 
         return Promise.resolve("User preferences updated successfully")
 
 
     } catch (err:any) {
-        console.log("Error in updating user preferences",err)
+        logger.sendError("Error in updating user preferences",err)
         return Promise.reject(err)
 
     }

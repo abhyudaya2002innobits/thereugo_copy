@@ -6,6 +6,7 @@ import tenantRouter from "./modules/tenantManagement/routes/tenantRoutes";
 import tenantUserRouter from "./modules/tenantUserManagement/routes/tenantUserRoutes";
 import countryCityRouter from "./modules/countryDataManagement/routes/routes";
 import prefRouter from "./modules/preferenceManagement/routes/routes";
+import userPrefRouter from "./modules/userPreferenceManagement/routes/route";
 
 const mainRouter = Router()
 
@@ -16,5 +17,6 @@ mainRouter.use(tenantRouter);
 mainRouter.use(tenantUserRouter);
 mainRouter.use(countryCityRouter);
 mainRouter.use(prefRouter);
+mainRouter.use(userPrefRouter)
 
 export default mainRouter;

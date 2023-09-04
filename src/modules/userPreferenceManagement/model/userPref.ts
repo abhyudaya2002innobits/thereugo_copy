@@ -1,11 +1,12 @@
 import { CreationOptional, Model } from "sequelize";
 import databaseInstance from "../../../database/dbConfig";
 import sequelize from "sequelize";
+import Preference from "../../preferenceManagement/model/pref";
 
 export interface UserPrefAttributes{
     userPreferenceId: string;
     userId: string;
-    prefId: bigint;
+    preferenceId: bigint;
     createdAt: Date;
     createdBy: string;
     updatedAt: Date
@@ -17,7 +18,7 @@ export interface UserPrefAttributes{
 class UserPref extends Model<UserPrefAttributes> {
     declare userPreferenceId: string;
     declare userId: string;
-    declare prefId: bigint;
+    declare preferenceId: bigint;
     declare createdAt: Date;
     declare createdBy?: string;
     declare updatedAt?: CreationOptional<Date>;
@@ -42,8 +43,8 @@ UserPref.init(
             allowNull: false
         },
 
-        prefId: {
-            type: sequelize.DataTypes.BIGINT,
+        preferenceId: {
+            type: sequelize.DataTypes.UUID,
             allowNull: false,
         },
 
@@ -77,8 +78,9 @@ UserPref.init(
             allowNull: true
         }
     },
-    { sequelize: databaseInstance, tableName: "userPreferences", timestamps: true, paranoid: true }
+    { sequelize: databaseInstance, tableName: "userPreference", timestamps: true, paranoid: true }
 
 )
-
+Preference.hasMany(UserPref, {foreignKey: 'preferenceId'})
+UserPref.belongsTo(Preference, {foreignKey: 'preferenceId'})
 export default UserPref

@@ -23,21 +23,21 @@ module.exports = {
             key: 'endUserId'
           },
           allowNull: false,
-          unique: true
+          // unique: true
         },
 
-        prefId: {
-          type: Sequelize.DataTypes.BIGINT,
+        preferenceId: {
+          type: Sequelize.DataTypes.UUID,
           references: {
 
             model: {
               tableName: 'preference',
             },
-            key: 'prefNumber'
+            key: 'preferenceId'
           },
           onDelete: 'CASCADE',
           allowNull: false,
-          unique: true,
+          // unique: true,
           
         },
 
