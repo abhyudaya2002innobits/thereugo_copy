@@ -42,7 +42,7 @@ class UserPrefService {
                 preferenceWhere = { ...preferenceWhere, entityValue: entityValue }
             }
     
-                result = await UserPref.findAndCountAll(
+                result = await UserPref.findAll(
                     {
                         where:{userId: userId},
                         include: [
