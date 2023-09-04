@@ -27,7 +27,7 @@ module.exports = {
         },
 
         prefId: {
-          type: Sequelize.DataTypes.INTEGER,
+          type: Sequelize.DataTypes.BIGINT,
           references: {
 
             model: {
