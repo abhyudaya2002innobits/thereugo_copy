@@ -17,6 +17,6 @@ mainRouter.use(tenantRouter);
 mainRouter.use(tenantUserRouter);
 mainRouter.use(countryCityRouter);
 mainRouter.use(prefRouter);
-mainRouter.use(userPrefRouter)
+mainRouter.use(userPrefRouter);
 
 export default mainRouter;

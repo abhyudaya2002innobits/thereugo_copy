@@ -2,6 +2,8 @@ import { Op } from "sequelize";
 import logger from "../../../common/logger"
 import UserPref from "../model/userPref";
 import Preference from "../../preferenceManagement/model/pref";
+import { Exception } from "../../../common/resp-handler";
+import { ERROR_TYPE } from "../../../common/resp-handler/constants";
 
 class UserPrefService {
     constructor() {
@@ -11,18 +13,24 @@ class UserPrefService {
         this.deleteUserPrefs = this.deleteUserPrefs.bind(this);
     }
 
-    async setUserPrefService(body: any) {
+    async setUserPrefService(body: any, userId:any) {
         try {
-            const { userId,preferences } = body
+            const { preferences } = body
+
+            if(userId=="7956fcac-7ab2-4a60-be92-39a11fc5308d"){
+                throw new Exception(ERROR_TYPE.BAD_REQUEST, "User pref cannot be set")
+            }
+
             let createBody = preferences?.map((prefId: any) => {
                 return {
                     userId: userId,
                     preferenceId: prefId
                 }
             })
-            await UserPref.bulkCreate(createBody);
 
-            return Promise.resolve({data:{}, message:"User preferences saved successfully"})
+            await UserPref?.bulkCreate(createBody);
+
+            return Promise.resolve("User preferences saved successfully")
         } catch (e) {
             logger.error("Error in creating userprefs",e)
             return Promise.reject(e)
@@ -90,9 +98,8 @@ async update (body:any, params: any) {
         const {added = [], removed = []} = body;
             if(added?.length){
                 await this.setUserPrefService({
-                    userId: userId,
                     prefs : added
-                }) 
+                },userId) 
             } if(removed?.length) {
                 let deleteReq = {
                     body : {

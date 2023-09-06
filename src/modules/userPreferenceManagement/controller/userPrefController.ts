@@ -16,7 +16,8 @@ class UserPrefController extends BaseController{
     async setUserPrefs(req: Request, res: Response) {
         try{
             var object = req.body
-            let result = await this.service.setUserPrefService(object)
+            var userId = req.params.userId
+            let result = await this.service.setUserPrefService(object,userId)
             return sendSuccess(res, result)
         }catch(e) {
             logger.error(e)
