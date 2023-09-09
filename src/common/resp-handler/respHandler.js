@@ -1,5 +1,6 @@
 const ApiResponse = require('./apiResponse')
 const { STATUS_CODE, ERROR_TYPE, RESPONSE_STATUS } = require('./constants')
+const Exception = require('./exception')
 
 let result
 
@@ -35,7 +36,7 @@ switch (err.errType) {
 function sendError(res, err) {
 console.log(err, "errorrsss")
   if (!err?.errType) {
-    err = exception.internalServerError(err)
+    err = new Exception(ERROR_TYPE.INTERNAL_SERVER_ERROR, err)
   }
   result = new ApiResponse(STATUS_CODE.ERROR, err)
   sendResponse(res, result)
