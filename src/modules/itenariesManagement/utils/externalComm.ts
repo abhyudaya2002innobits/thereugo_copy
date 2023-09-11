@@ -44,7 +44,7 @@ class WrapperService {
                 headers: this.getReqHeaders(),
                 params: {
                     lat: lat,
-                    long: long
+                    lon: long
                 }
             })
             const {data} = response;
