@@ -6,7 +6,7 @@ import { ERROR_TYPE } from "../../../common/resp-handler/constants";
 require('dotenv').config();
 
 
-class WrapperService {
+class ItineraryWrapperService {
     private baseUrl: any
     constructor(){
         this.baseUrl = process.env.ExtBaseURL;
@@ -25,10 +25,10 @@ class WrapperService {
         } catch (error: any) {
             const {response} = error;
             if(response?.data){
-                logger.error("Error in getting cities list [WrapperService]", response?.data)
+                logger.error("Error in getting cities list [IineraryWrapperService]", response?.data)
             return Promise.reject(response?.data)
             }
-            logger.error("Error in getting cities list [WrapperService]", error)
+            logger.error("Error in getting cities list [IineraryWrapperService]", error)
             return Promise.reject(error)
         }
     }
@@ -71,4 +71,4 @@ class WrapperService {
     }
 }
 
-export default WrapperService
+export default ItineraryWrapperService

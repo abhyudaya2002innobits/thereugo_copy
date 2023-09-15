@@ -1,12 +1,11 @@
 import { Request, Response } from "express";
-import BaseController from "../../../common/baseController/baseController";
 import { sendError, sendSuccess } from "../../../common/resp-handler/respHandler";
-import WrapperService from "../utils/externalComm";
+import ItineraryWrapperService from "../utils/externalComm";
 
 class ItenaryController {
-    private externalComm: WrapperService
+    private externalComm: ItineraryWrapperService
     constructor() {
-        this.externalComm = new WrapperService()
+        this.externalComm = new ItineraryWrapperService()
         this.getAllCities = this.getAllCities.bind(this);
         this.getClosestCity = this.getClosestCity.bind(this)
     }

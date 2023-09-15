@@ -8,6 +8,7 @@ import countryCityRouter from "./modules/countryDataManagement/routes/routes";
 import prefRouter from "./modules/preferenceManagement/routes/routes";
 import userPrefRouter from "./modules/userPreferenceManagement/routes/route";
 import itenaryRouter from "./modules/itenariesManagement/routes/routes";
+import PoiRouter from "./modules/poiManagement/routes/routes";
 
 const mainRouter = Router()
 
@@ -19,6 +20,7 @@ mainRouter.use(tenantUserRouter);
 mainRouter.use(countryCityRouter);
 mainRouter.use(prefRouter);
 mainRouter.use(userPrefRouter);
-mainRouter.use(itenaryRouter)
+mainRouter.use(itenaryRouter);
+mainRouter.use(PoiRouter);
 
 export default mainRouter;
