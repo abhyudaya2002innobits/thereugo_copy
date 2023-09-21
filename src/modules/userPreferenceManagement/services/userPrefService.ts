@@ -1,4 +1,4 @@
-import { Op } from "sequelize";
+import { Op, Sequelize } from "sequelize";
 import logger from "../../../common/logger"
 import UserPref from "../model/userPref";
 import Preference from "../../preferenceManagement/model/pref";
@@ -53,10 +53,16 @@ class UserPrefService {
                 result = await UserPref.findAll(
                     {
                         where:{userId: userId},
+                        attributes: {
+                            include: [
+                                [Sequelize.col("Preference.entityKey"),"entityKey"],
+                                [Sequelize.col("Preference.entityValue"),"entityValue"]
+                            ]
+                        },
                         include: [
                             {
                                 model: Preference,
-                                attributes: ['entityKey','entityValue'],
+                                attributes: [],
                                 where: preferenceWhere,
                             }
                         ]
@@ -67,6 +73,22 @@ class UserPrefService {
     
         }
     }
+
+    // where: {
+    //     ...where,
+    //   },
+    //   attributes: {
+    //     include: [
+    //       [Sequelize.col('resources.userId'), 'userId'],
+    //       [Sequelize.col('resources.fullName'), 'fullName'],
+    //       [Sequelize.col('resources.employeeId'), 'employeeId'],
+    //       [Sequelize.col('resources.email'), 'email'],
+    //       [Sequelize.col('resources.isActive'), 'isActive'],
+    //       [Sequelize.col('resources.contactNumber'), 'contactNumber'],
+    //       [Sequelize.col('resources.description'), 'description']
+
+    //     ]
+    //   },
 
 
 // Delete userPrefs

@@ -107,25 +107,11 @@ module.exports = {
       },
       {
         preferenceId: uuidv4(),
-        entityKey: "additional",
-        entityValue: "painting",
-        updatedAt: new Date(),
-        createdAt: new Date(),
-      },
-      {
-        preferenceId: uuidv4(),
         entityKey: "Additional",
         entityValue: "gaming",
         updatedAt: new Date(),
         createdAt: new Date(),
-      },
-      {
-        preferenceId: uuidv4(),
-        entityKey: "additional",
-        entityValue: "walking",
-        updatedAt: new Date(),
-        createdAt: new Date(),
-      },
+      }
 
       ])
       logger.info('preference seeder run successfully')

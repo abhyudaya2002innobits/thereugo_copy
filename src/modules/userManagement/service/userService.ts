@@ -15,13 +15,14 @@ class CustomerService {
     async createCustomer(object:any) {
         try {
             var newCustomer;
+            console.log(object);
             let userExist = await EndUser.findOne({ where : {
-                email : object?.email
+                email : object?.email.toLowerCase()
             }});
             if (userExist) {
                 throw new Exception(ERROR_TYPE.ALREADY_EXISTS,"User with email already exist");
             } else {
-                    newCustomer = await EndUser.create(object);
+                    newCustomer = await EndUser.create({...object, email:object?.email?.toLowerCase()});
                     // await this.sendEmails(object);
                 return Promise.resolve(newCustomer);
             }
