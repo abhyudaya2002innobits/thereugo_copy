@@ -10,7 +10,9 @@ dotenv.config()
 
 class CustomerService {
     constructor() {
-        this.createCustomer = this.createCustomer.bind(this);    }
+        this.createCustomer = this.createCustomer.bind(this); 
+        this.getAllUsers = this.getAllUsers.bind(this);
+       }
 
     async createCustomer(object:any) {
         try {
@@ -59,6 +61,16 @@ class CustomerService {
             logger.error("Error in sending email", error)
             return Promise.reject(error)
 
+        }
+    }
+
+    async getAllUsers() {
+        try{
+            var users = await EndUser.findAll()
+            return Promise.resolve(users)
+        }catch(e){
+            logger.error("Error in fetching the users", e)
+            return Promise.reject(e)
         }
     }
 

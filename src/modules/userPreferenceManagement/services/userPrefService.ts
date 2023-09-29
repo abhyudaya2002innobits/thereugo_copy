@@ -16,10 +16,9 @@ class UserPrefService {
     async setUserPrefService(body: any, userId:any) {
         try {
             const { preferences } = body
-
-            if(userId=="7956fcac-7ab2-4a60-be92-39a11fc5308d"){
-                throw new Exception(ERROR_TYPE.BAD_REQUEST, "User pref cannot be set")
-            }
+            // if(userId=="7956fcac-7ab2-4a60-be92-39a11fc5308d"){
+            //     throw new Exception(ERROR_TYPE.BAD_REQUEST, "User pref cannot be set")
+            // }
 
             let createBody = preferences?.map((prefId: any) => {
                 return {

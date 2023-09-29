@@ -7,6 +7,7 @@ class CustomerController extends BaseController {
     constructor() {
         super(new CustomerService);
         this.createCustomerController = this.createCustomerController.bind(this)
+        this.readAllUsers = this.readAllUsers.bind(this)
     }
 
     async createCustomerController(req: Request, res: Response) {
@@ -16,6 +17,15 @@ class CustomerController extends BaseController {
             return sendSuccess(res, result)
         } catch (e) {
             return sendError(res, e)
+        }
+    }
+
+    async readAllUsers(req:Request, res:Response) {
+        try{
+            var result = await this.service.getAllUsers()
+            return sendSuccess(res, result)
+        }catch(e) {
+            return sendError(res,e)
         }
     }
 

@@ -11,6 +11,7 @@ class CustomerRoutes {
     
     private customerRouting() {
         this.customerRouter.route("/api/v1/user").post(this.customerController.createCustomerController);
+        this.customerRouter.route("/api/v1/users").get(this.customerController.readAllUsers);
     }
 }
 const customerRouter = new CustomerRoutes().customerRouter
