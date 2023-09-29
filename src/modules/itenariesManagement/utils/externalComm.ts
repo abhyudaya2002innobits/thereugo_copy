@@ -61,6 +61,54 @@ class ItineraryWrapperService {
         }
     }
 
+    async getItenararies (params?:any, query?:any) {
+        try {
+            const {city} = query;
+
+            let response = await axios.get(`${this.baseUrl}${ExternalAPI.GET_ITENARARIES}`,{
+                headers: this.getReqHeaders(),
+                params: {
+                    city
+                }
+            })
+            const {data} = response;
+            return Promise.resolve(data)
+            
+        } catch (error:any) {
+            const {response} = error;
+            if(response?.data){
+                logger.error("Error in getting list of itenararies of city [WrapperService]", response?.data)
+            return Promise.reject(response?.data)
+            }
+            logger.error("Error in getting list of itenararies of city [WrapperService]", error)
+            return Promise.reject(error)
+        }
+    }
+
+    async getItenararyDetails (params?:any, query?:any) {
+        try {
+            const {walkId} = query;
+
+            let response = await axios.get(`${this.baseUrl}${ExternalAPI.GET_ITENARARY_DETAILS}`,{
+                headers: this.getReqHeaders(),
+                params: {
+                    walkid: walkId
+                }
+            })
+            const {data} = response;
+            return Promise.resolve(data)
+            
+        } catch (error:any) {
+            const {response} = error;
+            if(response?.data){
+                logger.error("Error in getting details of itenarary [WrapperService]", response?.data)
+            return Promise.reject(response?.data)
+            }
+            logger.error("Error in getting details of itenarary [WrapperService]", error)
+            return Promise.reject(error)
+        }
+    }
+
     private getReqHeaders(){
         let extApiKey = process.env.EXT_API_KEY;
         let headers = {
@@ -70,5 +118,6 @@ class ItineraryWrapperService {
         return headers
     }
 }
+
 
 export default ItineraryWrapperService

@@ -7,7 +7,9 @@ class ItenaryController {
     constructor() {
         this.externalComm = new ItineraryWrapperService()
         this.getAllCities = this.getAllCities.bind(this);
-        this.getClosestCity = this.getClosestCity.bind(this)
+        this.getClosestCity = this.getClosestCity.bind(this);
+        this.getItenararyList = this.getItenararyList.bind(this);
+        this.getItenararyDetails = this.getItenararyDetails.bind(this)
     }
 
     async getAllCities(req: Request, res: Response) {
@@ -29,6 +31,28 @@ class ItenaryController {
             return sendError(res, error)
         }
     }
+
+    async getItenararyList (req: Request, res: Response) {
+        try {
+            const {params, query} = req;
+            var result = await this.externalComm.getItenararies(params, query)
+            return sendSuccess(res, result)
+        } catch(error) {
+            return sendError(res, error)
+        }
+    }
+
+    async getItenararyDetails (req: Request, res: Response) {
+        try {
+            const {params, query} = req;
+            var result = await this.externalComm.getItenararyDetails(params, query)
+            return sendSuccess(res, result)
+        } catch(error) {
+            return sendError(res, error)
+        }
+    }
+
 }
+
 
 export default ItenaryController
